@@ -220,6 +220,11 @@ public class Muveletek extends javax.swing.JFrame {
         mnuFajl.add(mnuFajlMent);
 
         mnuFajlMentesMaskent.setText("Mentés másként...");
+        mnuFajlMentesMaskent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuFajlMentesMaskentActionPerformed(evt);
+            }
+        });
         mnuFajl.add(mnuFajlMentesMaskent);
         mnuFajl.add(jSeparator1);
 
@@ -312,6 +317,26 @@ public class Muveletek extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void mnuFajlMentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMentActionPerformed
+        JFileChooser fc = new JFileChooser(new File("."));
+        fc.setDialogTitle("Mentés másként");
+ 
+        int valasztottGombErteke = fc.showSaveDialog(this);
+        if(valasztottGombErteke == JFileChooser.APPROVE_OPTION){
+            File f = fc.getSelectedFile();
+           
+                lblEredmeny.setText("<html>Mentés..." + f.getPath() + "<bt>fajl neve" + f.getName() + "</html");
+                
+                try {
+                    Files.write(Paths.get(f.getPath(), "stat.txt"), "Statisztika:".getBytes());
+                            } catch (IOException ex) {
+                    Logger.getLogger(Muveletek.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+                
+        }
+    }//GEN-LAST:event_mnuFajlMentActionPerformed
+
+    private void mnuFajlMentesMaskentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFajlMentesMaskentActionPerformed
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Fájl mentése");
         fc.setCurrentDirectory(new File("."));
@@ -331,7 +356,10 @@ public class Muveletek extends javax.swing.JFrame {
             }
                 
         }
-    }//GEN-LAST:event_mnuFajlMentActionPerformed
+        
+        
+        
+    }//GEN-LAST:event_mnuFajlMentesMaskentActionPerformed
 
     /**
      * @param args the command line arguments
